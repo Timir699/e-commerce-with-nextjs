@@ -1,17 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ProductContext } from "./../contexts/ProductContextProvider";
-import { setDefaultResultOrder } from "dns";
+import { getAllProducts } from "../../services/getProducts";
+import { getResult } from "../../services/getResult";
 
-import { useRouter } from "next/router";
-
-const ProductList = ({ productData }: any) => {
-  const { products, productsDispatch } = useContext(ProductContext);
-
-  const router = useRouter();
-  console.log(router.query.id);
-
+const Products = ({ productData }: any) => {
   const [value, setValue] = useState("");
   const [result, setResult] = useState([]);
 
@@ -28,23 +21,7 @@ const ProductList = ({ productData }: any) => {
 
   useEffect(() => {
     if (value.length > 0) {
-      const getResult = async () => {
-        const response = await fetch(
-          "https://e-commerce-nextjs-78991-default-rtdb.firebaseio.com/products.json"
-        );
-        const responseData = await response.json();
-        let searchQuery = value.toLowerCase();
-        setResult([]);
-        for (const key in responseData) {
-          let res = responseData[key].title.toLowerCase();
-          if (res.includes(searchQuery)) {
-            setResult((prevResult): any => {
-              return [...prevResult, responseData[key]];
-            });
-          }
-        }
-      };
-      getResult();
+      getResult(value, setResult);
     } else {
       setResult(productData);
     }
@@ -52,7 +29,7 @@ const ProductList = ({ productData }: any) => {
 
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between container mx-auto">
         <input
           onChange={(e) => setValue(e.target.value)}
           className="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-10"
@@ -76,7 +53,11 @@ const ProductList = ({ productData }: any) => {
           <h2 className="sr-only">Products</h2>
           <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-24 ">
             {result?.map((product: any, index) => (
-              <Link key={index} href="/productDetail" className="group">
+              <Link
+                href={`/products/${product.id}`}
+                key={index}
+                className="group"
+              >
                 <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg xl:aspect-w-7 xl:aspect-h-4 border border-slate-500 p-8">
                   <Image
                     src={product.image1}
@@ -84,6 +65,7 @@ const ProductList = ({ productData }: any) => {
                     width={200}
                     height={200}
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
+                    loading="lazy"
                   />
                   <h3 className="mt-4 text-sm text-gray-700">
                     <b>Product Name :</b> {product.title}
@@ -103,4 +85,14 @@ const ProductList = ({ productData }: any) => {
   );
 };
 
-export default ProductList;
+export const getServerSideProps = async () => {
+  const loadedProducts = await getAllProducts();
+
+  return {
+    props: {
+      productData: loadedProducts,
+    },
+  };
+};
+
+export default Products;
