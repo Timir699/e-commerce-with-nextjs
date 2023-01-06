@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 import { getAllProducts } from "../../services/getProducts";
 import { getProduct } from "../../services/productDetails";
 import Image from "next/image";
+import useCartProducts from "./../../hooks/useCartProducts";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const loadedProducts = await getAllProducts();
@@ -31,7 +32,7 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
 };
 
 const ProductDetails = ({ product }: any) => {
-  console.log(product);
+  const { carts, cartDispatch } = useCartProducts();
 
   const router = useRouter();
   // console.log(router.query.id);
@@ -48,6 +49,9 @@ const ProductDetails = ({ product }: any) => {
   const onChangeHandler = (e: any) => {
     console.log(e.target.value);
     setReview(e.target.value);
+  };
+  const setItem = () => {
+    localStorage.setItem("cart", JSON.stringify(carts));
   };
 
   return (
@@ -83,9 +87,33 @@ const ProductDetails = ({ product }: any) => {
           <h3>
             <b>Product Price :</b> $ {product.price}
           </h3>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add to cart
-          </button>
+          {carts?.find((p: any) => p.id === product.id) ? (
+            <button
+              onClick={() => {
+                cartDispatch({
+                  type: "REMOVE_FROM_CART",
+                  payload: product,
+                });
+                setItem();
+              }}
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Remove from cart
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                cartDispatch({
+                  type: "ADD_TO_CART",
+                  payload: product,
+                });
+                setItem();
+              }}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Add to cart
+            </button>
+          )}
         </div>
       </div>
 

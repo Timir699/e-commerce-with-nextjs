@@ -3,10 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllProducts } from "../../services/getProducts";
 import { getResult } from "../../services/getResult";
+import useCartProducts from "../../hooks/useCartProducts";
 
 const Products = ({ productData }: any) => {
   const [value, setValue] = useState("");
   const [result, setResult] = useState([]);
+  const { cartDispatch, initialLocalCartData } = useCartProducts();
 
   const sorting = (e: any) => {
     const sortedRes = [...result];
