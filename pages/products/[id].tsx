@@ -56,8 +56,8 @@ const ProductDetails = ({ product }: any) => {
 
   return (
     <div className="container mx-auto">
-      <div className=" flex mt-20">
-        <div className="w-1/2 flex justify-around">
+      <div className="flex flex-col md:flex-row mt-20">
+        <div className="w-1/2 flex justify-around ml-20">
           <Image
             src={product.image1}
             alt="Picture of product"
@@ -75,7 +75,7 @@ const ProductDetails = ({ product }: any) => {
             loading="lazy"
           />
         </div>
-        <div className="w-1/2 mt-20">
+        <div className="w-1/2 mt-20 ml-20">
           <h3>
             <b>Product name : </b>
             {product.title}
