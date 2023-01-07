@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import useCartProducts from "./../../hooks/useCartProducts";
 
-const CartSummary = () => {
+const CartSummary = ({ isCheckout }: any) => {
   const { carts, cartDispatch } = useCartProducts();
 
   const [total, setTotal] = useState();
@@ -19,7 +19,9 @@ const CartSummary = () => {
     <div className="xl:w-1/2 md:w-1/3 xl:w-1/4 w-full bg-gray-100">
       <div className="flex flex-col md:h-screen px-14 py-20 justify-between overflow-y-auto">
         <div>
-          <p className="text-4xl font-black leading-9 text-gray-800">Summary</p>
+          <p className="text-4xl font-black leading-9 text-gray-800">
+            {isCheckout ? "Order Summary" : "Cart Summary"}
+          </p>
           <div className="flex items-center justify-between pt-16">
             <div className="w-56">
               <p className="text-base text-gray-800">Product Name</p>
@@ -53,6 +55,7 @@ const CartSummary = () => {
               ${total}
             </p>
           </div>
+
           {carts.length === 0 ? (
             <button
               type="button"
@@ -62,12 +65,12 @@ const CartSummary = () => {
               Checkout
             </button>
           ) : (
-            <Link href="/checkoutPage">
+            <Link href={isCheckout ? "/orderConfirmPage" : "/checkoutPage"}>
               <button
                 type="button"
                 className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
               >
-                Checkout
+                {isCheckout ? "Confirm Order" : "Checkout"}
               </button>
             </Link>
           )}

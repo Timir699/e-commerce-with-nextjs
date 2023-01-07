@@ -18,6 +18,8 @@ const Products = ({ productData }: any) => {
     } else if (e.target.value === "highest") {
       const highToLow = sortedRes.sort((a: any, b: any) => b.price - a.price);
       setResult(highToLow);
+    } else if (e.target.value === "best") {
+      setResult(productData);
     }
   };
 
@@ -42,8 +44,8 @@ const Products = ({ productData }: any) => {
         <div className="mt-10">
           sort by
           <form action="#" className="border w-36">
-            <select onClick={sorting} defaultValue="" name="sort" id="sort">
-              <option disabled value=""></option>
+            <select onClick={sorting} defaultValue="best" name="sort" id="sort">
+              <option value="best">Best Match</option>
               <option value="lowest">Price(lowest)</option>
               <option value="highest">Price(highest)</option>
             </select>
