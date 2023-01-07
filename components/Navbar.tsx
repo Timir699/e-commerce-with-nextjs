@@ -32,6 +32,16 @@ const Navbar = () => {
 
           <div className="w-full md:block md:w-auto" id="navbar-default">
             <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-slate-200 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-slate-200 bg-slate-200 md:bg-slate-200 dark:border-gray-700">
+              <li>
+                <Link
+                  href="/"
+                  className="block py-2 pl-3 pr-4 text-black rounded md:bg-transparent md:p-0 dark:text-black"
+                  aria-current="page"
+                >
+                  Products
+                </Link>
+              </li>
+
               {isLoggedIn ? (
                 <li>
                   <Link

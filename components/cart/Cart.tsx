@@ -6,16 +6,6 @@ import CartList from "./CartList";
 const Cart = () => {
   const { carts, cartDispatch } = useCartProducts();
 
-  const [total, setTotal] = useState();
-
-  useEffect(() => {
-    const subTotal = carts?.reduce(
-      (acc: any, curr: any) => acc + curr.price * curr.qty,
-      0
-    );
-    setTotal(subTotal);
-  }, [carts]);
-
   return (
     <>
       <div>
@@ -25,7 +15,7 @@ const Cart = () => {
         >
           <div className="flex md:flex-row flex-col justify-around" id="cart">
             <CartList />
-            <CartSummary total={total} />
+            <CartSummary />
           </div>
         </div>
       </div>

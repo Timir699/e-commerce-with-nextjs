@@ -51,6 +51,11 @@ const CartItem = ({ product }: any) => {
               <option>5</option>
             </select>
           </div>
+          <div className="w-3/4">
+            <p className="text-sm leading-none text-gray-800 ">
+              {product.description}
+            </p>
+          </div>
 
           <div className="flex items-center justify-between pt-5 pr-6">
             <div className="flex itemms-center">
