@@ -23,7 +23,6 @@ export const orderSummaryReducer = (state: any, action: any) => {
         ...state,
         paymentMethod: action.payload,
       };
-      console.log(state);
       localStorage.setItem("orderSummary", JSON.stringify(state));
       return state;
     case "SET_PAYMENT_INFO":
@@ -31,18 +30,33 @@ export const orderSummaryReducer = (state: any, action: any) => {
         ...state,
         paymentInfromation: action.payload,
       };
-      console.log(state);
+
       localStorage.setItem("orderSummary", JSON.stringify(state));
       return state;
     case "SET_ORDER_INFO":
       state = {
         ...state,
-        orderedProducts: action.payload,
+        orderedProducts: action.payload.carts,
+        userInfo: action.payload.userInfo,
       };
-      console.log(state);
+    case "SET_SUBTOTAL":
+      state = {
+        ...state,
+        totalAmount: action.payload,
+      };
+
       localStorage.setItem("orderSummary", JSON.stringify(state));
       return state;
+    // case "SET_USERINFO":
+    //   state = {
+    //     ...state,
+    //     userId: action.payload.userId,
+    //     userName: action.payload.userName,
+    //     userEmail: action.payload.userEmail,
+    //   };
 
+    //   localStorage.setItem("orderSummary", JSON.stringify(state));
+    //   return state;
     default:
       return state;
   }

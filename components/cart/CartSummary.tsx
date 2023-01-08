@@ -2,10 +2,12 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import useCartProducts from "./../../hooks/useCartProducts";
 import useOrderSummary from "../../hooks/useOrderSummary";
+import useUserInfo from "./../../hooks/useUserInfo";
 
 const CartSummary = ({ isCheckout }: any) => {
   const { carts, cartDispatch } = useCartProducts();
   const { orderSummary, orderSummaryDispatch } = useOrderSummary();
+  const { userInfo } = useUserInfo();
   console.log(carts);
 
   const [total, setTotal] = useState();
@@ -70,16 +72,23 @@ const CartSummary = ({ isCheckout }: any) => {
           ) : (
             <Link href={isCheckout ? "/orderConfirmPage" : "/checkoutPage"}>
               <button
-                onClick={() =>
+                onClick={() => {
                   orderSummaryDispatch({
                     type: "SET_ORDER_INFO",
-                    payload: carts,
-                  })
-                }
+                    payload: {
+                      carts: carts,
+                      userInfo: userInfo,
+                    },
+                  });
+                  orderSummaryDispatch({
+                    type: "SET_SUBTOTAL",
+                    payload: total,
+                  });
+                }}
                 type="button"
                 className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
               >
-                {isCheckout ? "Confirm Order" : "Checkout"}
+                {isCheckout ? "Order Summary" : "Checkout"}
               </button>
             </Link>
           )}

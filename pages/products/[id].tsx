@@ -41,13 +41,12 @@ const ProductDetails = ({ product }: any) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    console.log(review);
+
     setReview("");
 
     // setContactInfo({ name: "", email: "", phonenumber: "" });
   };
   const onChangeHandler = (e: any) => {
-    console.log(e.target.value);
     setReview(e.target.value);
   };
   const setItem = () => {

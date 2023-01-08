@@ -5,7 +5,6 @@ export const cartReducer = (state: any, action: any) => {
       localStorage.setItem("cart", JSON.stringify(state));
       return state;
     case "ADD_TO_CART":
-      console.log(action.payload);
       const cartList = [...state, { ...action.payload, qty: 1 }];
       localStorage.setItem("cart", JSON.stringify(cartList));
       return cartList;
@@ -18,7 +17,6 @@ export const cartReducer = (state: any, action: any) => {
       return filteredcart;
 
     case "CHANGE_CART_QTY":
-      console.log(action.payload);
       const changeQantity = state.filter((c: any) =>
         c.id === action.payload.id ? (c.qty = action.payload.qty) : c.qty
       );

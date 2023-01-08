@@ -4,7 +4,6 @@ import Maps from "./Maps";
 
 const ShippingInfo = () => {
   const { orderSummary, orderSummaryDispatch } = useOrderSummary();
-  console.log(orderSummary);
 
   const handlePaymentMethod = (e: any) => {
     orderSummaryDispatch({
@@ -24,7 +23,7 @@ const ShippingInfo = () => {
       <div className="mt-10 ">
         <p className="text-xl font-bold mb-4">Choose a payment method</p>
         <select
-          defaultValue={orderSummary.paymentMethod}
+          value={orderSummary.paymentMethod}
           onChange={handlePaymentMethod}
           className="py-2 px-1 border border-gray-200 mr-6 focus:outline-none"
         >
@@ -37,7 +36,7 @@ const ShippingInfo = () => {
       </div>
 
       <div className="mt-4">
-        {orderSummary.paymentMethod !== "Cash"
+        {orderSummary.paymentMethod !== "Cash" || undefined
           ? `Give your ${orderSummary.paymentMethod} information`
           : ""}
         {orderSummary.paymentMethod !== "undefined" ? (

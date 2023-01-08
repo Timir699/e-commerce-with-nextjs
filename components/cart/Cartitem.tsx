@@ -4,7 +4,6 @@ import useCartProducts from "../../hooks/useCartProducts";
 
 const CartItem = ({ product }: any) => {
   const { cartDispatch, carts } = useCartProducts();
-  // console.log(carts);
 
   const setItem = () => {
     localStorage.setItem("cart", JSON.stringify(carts));

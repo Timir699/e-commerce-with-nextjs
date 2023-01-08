@@ -13,12 +13,11 @@ type authContexValue = {
   // cookieToken: string;
 };
 
-export const AuthContext = createContext<authContexValue>({
+export const AuthContext = createContext<any>({
   token: "",
   isLoggedIn: false,
   login: (token: any) => {},
   logout: () => {},
-  // cookieToken: "",
 });
 
 const AuthContextProvider = ({ children }: Props) => {
@@ -34,6 +33,9 @@ const AuthContextProvider = ({ children }: Props) => {
   const logOutHandler = () => {
     setToken(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("orderSummary");
+    localStorage.removeItem("cart");
   };
 
   const contextValue: any = {

@@ -1,13 +1,17 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useCartProducts from "../hooks/useCartProducts";
+import useOrderSummary from "../hooks/useOrderSummary";
+import useUserInfo from "../hooks/useUserInfo";
 import { AuthContext } from "./../contexts/AuthContextProvider";
 
 const Navbar = () => {
   const router = useRouter();
   const { carts } = useCartProducts();
-  const { isLoggedIn, token, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { userInfo } = useUserInfo();
+  console.log(userInfo);
 
   const handleLogout = () => {
     logout();
@@ -41,7 +45,17 @@ const Navbar = () => {
                   Products
                 </Link>
               </li>
-
+              {isLoggedIn ? (
+                <li>
+                  <Link
+                    href="/myOrderPage"
+                    className="block py-2 pl-3 pr-4 text-black rounded md:bg-transparent md:p-0 dark:text-black"
+                    aria-current="page"
+                  >
+                    My Orders
+                  </Link>
+                </li>
+              ) : null}
               {isLoggedIn ? (
                 <li>
                   <Link
@@ -53,6 +67,7 @@ const Navbar = () => {
                   </Link>
                 </li>
               ) : null}
+              {isLoggedIn ? <li>Logged in as:{userInfo?.userEmail}</li> : null}
 
               {!isLoggedIn ? (
                 <li>

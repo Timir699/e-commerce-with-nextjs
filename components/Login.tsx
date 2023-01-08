@@ -5,23 +5,41 @@ import { useRouter } from "next/router";
 import { auth, provider } from "../firebase/firebase.config";
 import { signInWithPopup } from "firebase/auth";
 import { loginService } from "../services/auth/loginService";
+import useOrderSummary from "./../hooks/useOrderSummary";
+import useUserInfo from "../hooks/useUserInfo";
 
 const Login = () => {
   const router = useRouter();
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
+  const { orderSummaryDispatch } = useOrderSummary();
+  const { userInfoDispatch } = useUserInfo();
 
-  const { login } = useContext(AuthContext);
+  const { login, userInformationHandler } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [googleInfo, setGoogleInfo] = useState<any>();
 
   const handleGoogleSignin = () => {
     signInWithPopup(auth, provider).then((data: any) => {
       console.log(data.user);
       login(data.user?.accessToken);
+
+      orderSummaryDispatch({
+        type: "SET_USERINFO",
+        payload: {
+          userId: data.user.uid,
+          userEmail: data.user.email,
+        },
+      });
+      userInfoDispatch({
+        type: "SET_USERINFO",
+        payload: {
+          userId: data.user.uid,
+          userEmail: data.user.email,
+        },
+      });
+
       router.push("/products");
-      setGoogleInfo(data.user.email);
     });
   };
 
@@ -32,6 +50,7 @@ const Login = () => {
     const enteredEmail = emailInputRef?.current?.value;
     const enteredPassword = passwordInputRef?.current?.value;
     setIsLoading(true);
+
     loginService(apiKey, enteredEmail, enteredPassword)
       .then((res) => {
         setIsLoading(false);
@@ -45,19 +64,30 @@ const Login = () => {
         }
       })
       .then((data) => {
-        console.log(data);
+        orderSummaryDispatch({
+          type: "SET_USERINFO",
+          payload: {
+            userId: data.localId,
+            userEmail: data.email,
+          },
+        });
+        userInfoDispatch({
+          type: "SET_USERINFO",
+          payload: {
+            userId: data.localId,
+            userEmail: data.email,
+          },
+        });
 
         if (data.idToken) {
           login(data.idToken);
         }
-
         router.push("/products");
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   return (
     <div className="container mx-auto">
       <div className="bg-grey-lighter mt-24 flex flex-col">
@@ -97,7 +127,7 @@ const Login = () => {
               onClick={handleGoogleSignin}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
-              Google account
+              Log in with Google
             </button>
           </div>
         </div>
