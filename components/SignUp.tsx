@@ -4,14 +4,12 @@ import { apiKey } from "../apiKey/apiKey";
 import { signUpService } from "../services/auth/signUpService";
 
 const SignUp = () => {
-  const nameInputRef = useRef<HTMLInputElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = (e: any) => {
     e.preventDefault();
-    // const enteredName = nameInputRef.current.value;
     const enteredEmail = emailInputRef?.current?.value;
     const enteredPassword = passwordInputRef?.current?.value;
     setIsLoading(true);
@@ -35,14 +33,6 @@ const SignUp = () => {
           <div className="px-6 py-4 rounded shadow-md text-black w-full">
             <h1 className="mb-8 text-3xl text-center">Sign up</h1>
             <form onSubmit={submitHandler}>
-              {/* <input
-                ref={nameInputRef}
-                type="text"
-                className="block border border-grey-light w-full p-3 rounded mb-4"
-                name="fullname"
-                placeholder="Full Name"
-              /> */}
-
               <input
                 ref={emailInputRef}
                 type="text"

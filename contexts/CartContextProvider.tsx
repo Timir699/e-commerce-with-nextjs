@@ -12,14 +12,13 @@ const CartContextProvider = ({ children }: any) => {
   };
 
   useEffect(() => {
-    let l;
+    let cartData;
     if (localStorage.getItem("cart")) {
-      l = JSON.parse(localStorage.getItem("cart") || "{}");
-      console.log(l);
+      cartData = JSON.parse(localStorage.getItem("cart") || "{}");
 
       cartDispatch({
         type: "INIT_STATE",
-        payload: l,
+        payload: cartData,
       });
     }
   }, []);

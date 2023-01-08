@@ -15,7 +15,7 @@ const Cart = () => {
         >
           <div className="flex md:flex-row flex-col justify-around" id="cart">
             <CartList />
-            <CartSummary />
+            <CartSummary isCheckout={false} />
           </div>
         </div>
       </div>

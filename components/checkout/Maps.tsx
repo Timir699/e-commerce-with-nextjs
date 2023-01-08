@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Map, Draggable } from "pigeon-maps";
-import placeholder from "../../resource/placeholder.png";
 import Image from "next/image";
+import useOrderSummary from "../../hooks/useOrderSummary";
+import useCartProducts from "../../hooks/useCartProducts";
 
 const Maps = () => {
-  const [anchor, setAnchor] = useState<any>([23.745, 90.4099]);
+  const { orderSummary, orderSummaryDispatch } = useOrderSummary();
 
+  const [anchor, setAnchor] = useState<any>([23.745, 90.4099]);
   const [lat, setLat] = useState<any>();
   const [lon, setLon] = useState<any>();
   const [deliveryLocation, setDeliveryLocation] = useState<any>();
 
+  console.log(orderSummary.locationCoordinates);
+
   const a = anchor[0];
   const b = anchor[1];
 
-  console.log(a, b);
-
-  const setLocationFromMap = () => {
+  const locationFromMap = () => {
     fetch(
       `https://api.opencagedata.com/geocode/v1/json?q=${a}+${b}&key=d1bd42f6bc564016b8a4733f46d56f43`
     )
@@ -30,8 +32,19 @@ const Maps = () => {
     });
   }, []);
   useEffect(() => {
-    setLocationFromMap();
+    locationFromMap();
+    orderSummaryDispatch({
+      type: "SET_LOCATION_COORDINATES",
+      payload: anchor,
+    });
   }, [anchor]);
+
+  useEffect(() => {
+    orderSummaryDispatch({
+      type: "SET_DELIVERY_LOCATION",
+      payload: deliveryLocation,
+    });
+  }, [deliveryLocation]);
 
   return (
     <div className="mt-10">

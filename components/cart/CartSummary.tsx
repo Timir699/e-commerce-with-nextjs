@@ -1,9 +1,12 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import useCartProducts from "./../../hooks/useCartProducts";
+import useOrderSummary from "../../hooks/useOrderSummary";
 
 const CartSummary = ({ isCheckout }: any) => {
   const { carts, cartDispatch } = useCartProducts();
+  const { orderSummary, orderSummaryDispatch } = useOrderSummary();
+  console.log(carts);
 
   const [total, setTotal] = useState();
 
@@ -29,7 +32,7 @@ const CartSummary = ({ isCheckout }: any) => {
             <p className="text-base text-gray-800">Quantity</p>
             <p className="text-base text-gray-800">Price</p>
           </div>
-          {carts.map((cartProduct: any) => (
+          {carts?.map((cartProduct: any) => (
             <div
               key={cartProduct.id}
               className="flex items-center justify-between pt-8"
@@ -67,6 +70,12 @@ const CartSummary = ({ isCheckout }: any) => {
           ) : (
             <Link href={isCheckout ? "/orderConfirmPage" : "/checkoutPage"}>
               <button
+                onClick={() =>
+                  orderSummaryDispatch({
+                    type: "SET_ORDER_INFO",
+                    payload: carts,
+                  })
+                }
                 type="button"
                 className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
               >
