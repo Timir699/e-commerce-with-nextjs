@@ -48,7 +48,7 @@ const Navbar = () => {
               {isLoggedIn ? (
                 <li>
                   <Link
-                    href="/myOrderPage"
+                    href="/myorder"
                     className="block py-2 pl-3 pr-4 text-black rounded md:bg-transparent md:p-0 dark:text-black"
                     aria-current="page"
                   >

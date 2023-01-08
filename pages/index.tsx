@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { getAllProducts } from "../services/getProducts";
 
-export default function App({ productData }: any) {
+export default function App() {
   const router = useRouter();
   // useEffect(() => {
   //   router.push("/products");
@@ -19,17 +19,8 @@ export default function App({ productData }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container mx-auto">
-        <Products productData={productData} />
+        <Products />
       </main>
     </div>
   );
 }
-export const getServerSideProps = async () => {
-  const loadedProducts = await getAllProducts();
-
-  return {
-    props: {
-      productData: loadedProducts,
-    },
-  };
-};

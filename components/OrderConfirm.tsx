@@ -30,7 +30,7 @@ const OrderConfirm = () => {
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
               <b>Email:</b>
-              {orderSummary?.userEmail || orderSummary.userInfo.userEmail}
+              {orderSummary?.userEmail || orderSummary?.userInfo?.userEmail}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">

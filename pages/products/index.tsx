@@ -3,12 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllProducts } from "../../services/getProducts";
 import { getResult } from "../../services/getResult";
-import useCartProducts from "../../hooks/useCartProducts";
 
 const Products = ({ productData }: any) => {
   const [value, setValue] = useState("");
   const [result, setResult] = useState([]);
-  const { cartDispatch, initialLocalCartData } = useCartProducts();
 
   const sorting = (e: any) => {
     const sortedRes = [...result];
@@ -100,3 +98,14 @@ export const getServerSideProps = async () => {
 };
 
 export default Products;
+
+// export const getStaticProps = async () => {
+//   const loadedProducts = await getAllProducts();
+
+//   return {
+//     props: {
+//       productData: loadedProducts,
+//     },
+//     revalidate: 30,
+//   };
+// };

@@ -7,6 +7,7 @@ import { signInWithPopup } from "firebase/auth";
 import { loginService } from "../services/auth/loginService";
 import useOrderSummary from "./../hooks/useOrderSummary";
 import useUserInfo from "../hooks/useUserInfo";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const router = useRouter();
@@ -38,7 +39,7 @@ const Login = () => {
           userEmail: data.user.email,
         },
       });
-
+      Cookies.set("loggedIn", "true");
       router.push("/products");
     });
   };
@@ -82,6 +83,7 @@ const Login = () => {
         if (data.idToken) {
           login(data.idToken);
         }
+        Cookies.set("loggedIn", "true");
         router.push("/products");
       })
       .catch((err) => {

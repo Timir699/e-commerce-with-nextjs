@@ -4,30 +4,32 @@ import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 import { getAllProducts } from "../../services/getProducts";
 import { getProduct } from "../../services/productDetails";
 import Image from "next/image";
-import useCartProducts from "./../../hooks/useCartProducts";
+import useCartProducts from "../../hooks/useCartProducts";
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const loadedProducts = await getAllProducts();
+export const getStaticProps = async (context: any) => {
+  const { params } = context;
+  console.log(params);
 
-  const paths = loadedProducts.map((product: any) => {
-    return {
-      params: { id: product.id },
-    };
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async (context: any) => {
-  const id = context.params.id;
-  const product = await getProduct(id);
+  const product = await getProduct(params.productId);
 
   return {
     props: { product: product },
-    revalidate: 10,
+  };
+};
+
+export const getStaticPaths = async (context: any) => {
+  const loadedProducts = await getAllProducts();
+
+  const paths = loadedProducts.map((product) => {
+    return {
+      params: {
+        productId: `${product.id}`,
+      },
+    };
+  });
+  return {
+    paths: paths,
+    fallback: false,
   };
 };
 
@@ -58,7 +60,7 @@ const ProductDetails = ({ product }: any) => {
       <div className="flex flex-col md:flex-row mt-20">
         <div className="w-1/2 flex justify-around ml-20">
           <Image
-            src={product.image1}
+            src={product?.image1}
             alt="Picture of product"
             width={200}
             height={200}
@@ -66,7 +68,7 @@ const ProductDetails = ({ product }: any) => {
             loading="lazy"
           />
           <Image
-            src={product.image1}
+            src={product?.image1}
             alt="Picture of product"
             width={200}
             height={200}
@@ -77,14 +79,14 @@ const ProductDetails = ({ product }: any) => {
         <div className="w-1/2 mt-20 ml-20">
           <h3>
             <b>Product name : </b>
-            {product.title}
+            {product?.title}
           </h3>
           <h3>
             <b>Product Detials : </b>
-            {product.description}
+            {product?.description}
           </h3>
           <h3>
-            <b>Product Price :</b> $ {product.price}
+            <b>Product Price :</b> $ {product?.price}
           </h3>
           {carts?.find((p: any) => p.id === product.id) ? (
             <button

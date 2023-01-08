@@ -1,5 +1,5 @@
-import Router, { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContextProvider";
 
 const Profile = () => {

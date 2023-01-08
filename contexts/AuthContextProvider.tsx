@@ -1,5 +1,5 @@
+import Cookies from "js-cookie";
 import { createContext, useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 
 type Props = {
   children?: React.ReactNode;
@@ -36,6 +36,7 @@ const AuthContextProvider = ({ children }: Props) => {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("orderSummary");
     localStorage.removeItem("cart");
+    Cookies.remove("loggedIn");
   };
 
   const contextValue: any = {
