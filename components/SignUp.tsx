@@ -2,8 +2,10 @@ import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { apiKey } from "../apiKey/apiKey";
 import { signUpService } from "../services/auth/signUpService";
+import { useRouter } from "next/router";
 
 const SignUp = () => {
+  const router = useRouter();
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +20,7 @@ const SignUp = () => {
       if (res.ok) {
         console.log(res);
         alert("Signed up Successfully");
+        router.push("loginPage");
       } else {
         res.json().then((data: any) => {
           const errorMessage = data?.error?.message;

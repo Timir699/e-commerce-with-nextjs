@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 
 const Login = () => {
   const router = useRouter();
+
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const { orderSummaryDispatch } = useOrderSummary();
@@ -40,8 +41,7 @@ const Login = () => {
         },
       });
       Cookies.set("loggedIn", "true");
-      Cookies.set("userID", data.user.uid);
-      router.push("/products");
+      router.back();
     });
   };
 
@@ -85,8 +85,8 @@ const Login = () => {
           login(data.idToken);
         }
         Cookies.set("loggedIn", "true");
-        Cookies.set("userID", data.localId);
-        router.push("/products");
+
+        router.back();
       })
       .catch((err) => {
         console.log(err);
