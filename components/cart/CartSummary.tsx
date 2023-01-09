@@ -3,14 +3,39 @@ import React, { useEffect, useState } from "react";
 import useCartProducts from "./../../hooks/useCartProducts";
 import useOrderSummary from "../../hooks/useOrderSummary";
 import useUserInfo from "./../../hooks/useUserInfo";
+import { useRouter } from "next/router";
 
 const CartSummary = ({ isCheckout }: any) => {
+  const router = useRouter();
   const { carts, cartDispatch } = useCartProducts();
   const { orderSummary, orderSummaryDispatch } = useOrderSummary();
   const { userInfo } = useUserInfo();
-  console.log(carts);
 
   const [total, setTotal] = useState();
+
+  const cartHandler = () => {
+    console.log(userInfo);
+    console.log(isCheckout);
+
+    if (isCheckout && Object.keys(userInfo).length === 0) {
+      router.push("/loginPage");
+    }
+    if (isCheckout && Object.keys(userInfo).length !== 0) {
+      orderSummaryDispatch({
+        type: "SET_ORDER_INFO",
+        payload: {
+          carts: carts,
+          userInfo: userInfo,
+        },
+      });
+      orderSummaryDispatch({
+        type: "SET_SUBTOTAL",
+        payload: total,
+      });
+      router.push("/orderConfirmPage");
+    }
+    router.push("checkoutPage");
+  };
 
   useEffect(() => {
     const subTotal = carts?.reduce(
@@ -70,27 +95,21 @@ const CartSummary = ({ isCheckout }: any) => {
               Checkout
             </button>
           ) : (
-            <Link href={isCheckout ? "/orderConfirmPage" : "/checkoutPage"}>
-              <button
-                onClick={() => {
-                  orderSummaryDispatch({
-                    type: "SET_ORDER_INFO",
-                    payload: {
-                      carts: carts,
-                      userInfo: userInfo,
-                    },
-                  });
-                  orderSummaryDispatch({
-                    type: "SET_SUBTOTAL",
-                    payload: total,
-                  });
-                }}
-                type="button"
-                className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
-              >
-                {isCheckout ? "Order Summary" : "Checkout"}
-              </button>
-            </Link>
+            // <Link
+            //   href={
+            //     isCheckout && Object.keys(userInfo).length !== 0
+            //       ? "/orderConfirmPage"
+            //       : "/checkoutPage"
+            //   }
+            // >
+            <button
+              onClick={() => cartHandler()}
+              type="button"
+              className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
+            >
+              {isCheckout ? "Order Summary" : "Checkout"}
+            </button>
+            // </Link>
           )}
         </div>
       </div>

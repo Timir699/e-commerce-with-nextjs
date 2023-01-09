@@ -7,13 +7,18 @@ import Image from "next/image";
 import useCartProducts from "../../hooks/useCartProducts";
 
 export const getStaticProps = async (context: any) => {
+  console.log("generet");
+
   const { params } = context;
   console.log(params);
 
   const product = await getProduct(params.productId);
 
   return {
-    props: { product: product },
+    props: {
+      product: product,
+    },
+    revalidate: 10,
   };
 };
 
@@ -45,8 +50,6 @@ const ProductDetails = ({ product }: any) => {
     event.preventDefault();
 
     setReview("");
-
-    // setContactInfo({ name: "", email: "", phonenumber: "" });
   };
   const onChangeHandler = (e: any) => {
     setReview(e.target.value);

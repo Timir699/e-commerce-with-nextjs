@@ -1,15 +1,14 @@
 import Head from "next/head";
-import Products from "./products";
+import Products from "./products/index";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { getAllProducts } from "../services/getProducts";
 
 export default function App() {
   const router = useRouter();
-  // useEffect(() => {
-  //   router.push("/products");
-  // }, [router]);
 
+  useEffect(() => {
+    router.push("/products");
+  }, []);
   return (
     <div>
       <Head>
