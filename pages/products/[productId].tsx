@@ -1,16 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 import { getAllProducts } from "../../services/getProducts";
 import { getProduct } from "../../services/productDetails";
 import Image from "next/image";
 import useCartProducts from "../../hooks/useCartProducts";
 
 export const getStaticProps = async (context: any) => {
-  console.log("generet");
-
   const { params } = context;
-  console.log(params);
 
   const product = await getProduct(params.productId);
 
@@ -22,7 +18,7 @@ export const getStaticProps = async (context: any) => {
   };
 };
 
-export const getStaticPaths = async (context: any) => {
+export const getStaticPaths = async () => {
   const loadedProducts = await getAllProducts();
 
   const paths = loadedProducts.map((product) => {

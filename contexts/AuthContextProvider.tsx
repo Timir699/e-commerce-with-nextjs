@@ -37,6 +37,7 @@ const AuthContextProvider = ({ children }: Props) => {
     localStorage.removeItem("orderSummary");
     localStorage.removeItem("cart");
     Cookies.remove("loggedIn");
+    Cookies.remove("userID");
   };
 
   const contextValue: any = {

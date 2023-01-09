@@ -1,17 +1,18 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import useCartProducts from "../hooks/useCartProducts";
-import useOrderSummary from "../hooks/useOrderSummary";
 import useUserInfo from "../hooks/useUserInfo";
 import { AuthContext } from "./../contexts/AuthContextProvider";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
   const router = useRouter();
   const { carts } = useCartProducts();
   const { isLoggedIn, logout } = useContext(AuthContext);
   const { userInfo } = useUserInfo();
-  console.log(userInfo);
+  let userID = Cookies.get("userId");
+  console.log(userID);
 
   const handleLogout = () => {
     logout();

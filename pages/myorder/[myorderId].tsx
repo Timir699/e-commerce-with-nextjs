@@ -1,65 +1,46 @@
-import React, { useEffect } from "react";
-import useOrderSummary from "../hooks/useOrderSummary";
+import React, { useEffect, useState } from "react";
+import { getOrders } from "../../services/getOrders";
+import { useQuery } from "react-query";
+import { useRouter } from "next/router";
 
-import Link from "next/link";
-import useCartProducts from "./../hooks/useCartProducts";
+const MyorderDetails = () => {
+  const { data, error, isLoading } = useQuery("orders", getOrders);
+  const router = useRouter();
+  console.log(data);
 
-const OrderConfirm = () => {
-  const { orderSummary } = useOrderSummary();
-  const { cartDispatch } = useCartProducts();
-  console.log(orderSummary);
-
-  const orderConfirmHandler = async (orderSummary: any) => {
-    console.log(orderSummary);
-
-    localStorage.removeItem("cart");
-    localStorage.removeItem("orderSummary");
-    cartDispatch({
-      type: "INIT_STATE",
-      payload: [],
-    });
-    const response = await fetch(
-      "https://e-commerce-nextjs-78991-default-rtdb.firebaseio.com/orders.json",
-      {
-        method: "POST",
-        body: JSON.stringify(orderSummary),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await response.json();
-    console.log(data);
-  };
+  const orderDetails = data?.find(
+    (orderDetails: any) => orderDetails.id === router.query.myorderId
+  );
+  console.log(orderDetails);
 
   return (
     <div className="container mx-auto">
       <div className="flex flex-col justify-start items-start bg-gray-50 w-full p-6 md:p-14">
         <div>
           <h1 className="text-2xl font-semibold leading-6 text-gray-800">
-            Confirm Your Order(Here is your order Details)
+            Details of order Id {orderDetails?.id}
           </h1>
         </div>
         <div className="flex mt-7 flex-col items-end w-full space-y-6">
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
               <b>Email:</b>
-              {orderSummary?.userEmail || orderSummary?.userInfo?.userEmail}
+              {orderDetails?.userInfo?.userEmail}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
-              <b>Shipping Address:</b> {orderSummary.deliveryLocation}
+              <b>Shipping Address:</b> {orderDetails?.deliveryLocation}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
-              <b>Payment Method:</b> {orderSummary?.paymentMethod}
+              <b>Payment Method:</b> {orderDetails?.paymentMethod}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
-              <b>Payment Information: </b> {orderSummary?.paymentInfromation}
+              <b>Payment Information: </b> {orderDetails?.paymentInfromation}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
@@ -71,7 +52,7 @@ const OrderConfirm = () => {
                 <p>quantity</p>
                 <p>total price</p>
               </div>
-              {orderSummary?.orderedProducts?.map((product: any) => (
+              {orderDetails?.orderedProducts?.map((product: any) => (
                 <div
                   key={product.id}
                   className="flex justify-between w-full mt-5"
@@ -87,20 +68,11 @@ const OrderConfirm = () => {
           </div>
         </div>
         <p className="text-2xl font-bold mt-5">
-          Subtotal : ${orderSummary.totalAmount}
+          Total : ${orderDetails?.totalAmount}
         </p>
-        <Link href="/myorder">
-          <button
-            onClick={() => orderConfirmHandler(orderSummary)}
-            type="button"
-            className="p-10 mt-5 text-base leading-none w-full py-5 bg-gray-800 border-gray-500 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
-          >
-            Confirm Order
-          </button>
-        </Link>
       </div>
     </div>
   );
 };
 
-export default OrderConfirm;
+export default MyorderDetails;

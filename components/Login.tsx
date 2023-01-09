@@ -40,6 +40,7 @@ const Login = () => {
         },
       });
       Cookies.set("loggedIn", "true");
+      Cookies.set("userID", data.user.uid);
       router.push("/products");
     });
   };
@@ -84,6 +85,7 @@ const Login = () => {
           login(data.idToken);
         }
         Cookies.set("loggedIn", "true");
+        Cookies.set("userID", data.localId);
         router.push("/products");
       })
       .catch((err) => {

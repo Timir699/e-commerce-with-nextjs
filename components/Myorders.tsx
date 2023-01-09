@@ -1,19 +1,18 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import useUserInfo from "../../hooks/useUserInfo";
-import { getOrders } from "../../services/getOrders";
+import React from "react";
+import useUserInfo from "./../hooks/useUserInfo";
 
-const MyOrderPage = ({ allOrders }: any) => {
+const Myorders = ({ orders }: any) => {
   const { userInfo } = useUserInfo();
 
-  const userOrder = allOrders?.filter(
+  const userOrder = orders?.filter(
     (order: any) => order.userInfo.userId === userInfo.userId
   );
-
   console.log(userOrder);
 
   return (
-    <div className="container mx-auto">
+    <>
       <div className="bg-white p-8 rounded-md w-full">
         <div className=" flex items-center justify-between pb-6">
           <div>
@@ -43,26 +42,20 @@ const MyOrderPage = ({ allOrders }: any) => {
                 <tbody>
                   {userOrder?.map((singleOrder: any) => (
                     <tr key={singleOrder.id} className="cursor-pointer">
+                      {/* <Link href={`/myorder`}> */}
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <Link href={`/myorder/${singleOrder.id}`}>
-                          {singleOrder.id}
-                        </Link>
+                        {singleOrder.id}
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <Link href={`/myorder/${singleOrder.id}`}>
-                          {singleOrder.orderedProducts.length}
-                        </Link>
+                        {singleOrder.orderedProducts.length}
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <Link href={`/myorder/${singleOrder.id}`}>
-                          {singleOrder.paymentMethod}
-                        </Link>
+                        {singleOrder.paymentMethod}
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <Link href={`/myorder/${singleOrder.id}`}>
-                          ${singleOrder.totalAmount}
-                        </Link>
+                        ${singleOrder.totalAmount}
                       </td>
+                      {/* </Link> */}
                     </tr>
                   ))}
                 </tbody>
@@ -71,18 +64,8 @@ const MyOrderPage = ({ allOrders }: any) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export const getServerSideProps = async () => {
-  const loadedOrders = await getOrders();
-
-  return {
-    props: {
-      allOrders: loadedOrders,
-    },
-  };
-};
-
-export default MyOrderPage;
+export default Myorders;
