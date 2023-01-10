@@ -4,10 +4,11 @@ import { getAllProducts } from "../../services/getProducts";
 import { getProduct } from "../../services/productDetails";
 import Image from "next/image";
 import useCartProducts from "../../hooks/useCartProducts";
+import { Product } from "../../types/productType";
+import { GetStaticPaths, GetStaticProps } from "next";
 
-export const getStaticProps = async (context: any) => {
+export const getStaticProps: GetStaticProps = async (context: any) => {
   const { params } = context;
-
   const product = await getProduct(params.productId);
 
   return {
@@ -18,7 +19,7 @@ export const getStaticProps = async (context: any) => {
   };
 };
 
-export const getStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const loadedProducts = await getAllProducts();
 
   const paths = loadedProducts.map((product) => {
@@ -34,11 +35,11 @@ export const getStaticPaths = async () => {
   };
 };
 
-const ProductDetails = ({ product }: any) => {
+const ProductDetails = ({ product }: { product: Product }) => {
   const { carts, cartDispatch } = useCartProducts();
 
   const router = useRouter();
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState<string>("");
 
   const handleSubmit = (event: any) => {
     event.preventDefault();

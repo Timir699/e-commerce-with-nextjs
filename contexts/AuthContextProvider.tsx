@@ -1,19 +1,15 @@
 import Cookies from "js-cookie";
 import { createContext, useEffect, useState } from "react";
-
-type Props = {
-  children?: React.ReactNode;
-};
+import { Props } from "../types/generic";
 
 type authContexValue = {
   token: string;
   isLoggedIn: boolean;
   login: (token: any) => void;
   logout: () => void;
-  // cookieToken: string;
 };
 
-export const AuthContext = createContext<any>({
+export const AuthContext = createContext<authContexValue>({
   token: "",
   isLoggedIn: false,
   login: (token: any) => {},
@@ -38,9 +34,10 @@ const AuthContextProvider = ({ children }: Props) => {
     localStorage.removeItem("cart");
     Cookies.remove("loggedIn");
     Cookies.remove("userID");
+    window.location.reload();
   };
 
-  const contextValue: any = {
+  const contextValue: authContexValue = {
     token: token,
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,

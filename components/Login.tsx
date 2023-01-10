@@ -17,7 +17,7 @@ const Login = () => {
   const { orderSummaryDispatch } = useOrderSummary();
   const { userInfoDispatch } = useUserInfo();
 
-  const { login, userInformationHandler } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
 

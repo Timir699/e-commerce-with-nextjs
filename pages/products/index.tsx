@@ -3,18 +3,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllProducts } from "../../services/getProducts";
 import { getResult } from "../../services/getResult";
+import { ProductList, Product } from "../../types/productType";
+import { GetServerSideProps } from "next";
 
-const Products = ({ productData }: any) => {
-  const [value, setValue] = useState("");
-  const [result, setResult] = useState([]);
+const Products = ({ productData }: { productData: ProductList }) => {
+  const [value, setValue] = useState<string>("");
+  const [result, setResult] = useState<ProductList>([]);
 
   const sorting = (e: any) => {
     const sortedRes = [...result];
     if (e.target.value === "lowest") {
-      const lowToHigh = sortedRes.sort((a: any, b: any) => a.price - b.price);
+      const lowToHigh = sortedRes.sort(
+        (a: Product, b: Product) => a.price - b.price
+      );
       setResult(lowToHigh);
     } else if (e.target.value === "highest") {
-      const highToLow = sortedRes.sort((a: any, b: any) => b.price - a.price);
+      const highToLow = sortedRes.sort(
+        (a: Product, b: Product) => b.price - a.price
+      );
       setResult(highToLow);
     } else if (e.target.value === "best") {
       setResult(productData);
@@ -33,7 +39,9 @@ const Products = ({ productData }: any) => {
     <>
       <div className="flex justify-between container mx-auto">
         <input
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setValue(e.target.value)
+          }
           className="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-10"
           id="username"
           type="text"
@@ -54,7 +62,7 @@ const Products = ({ productData }: any) => {
         <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Products</h2>
           <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-24 ">
-            {result?.map((product: any, index) => (
+            {result?.map((product: Product, index) => (
               <Link
                 href={`/products/${product.id}`}
                 key={index}
@@ -87,8 +95,8 @@ const Products = ({ productData }: any) => {
   );
 };
 
-export const getServerSideProps = async () => {
-  const loadedProducts = await getAllProducts();
+export const getServerSideProps: GetServerSideProps = async () => {
+  const loadedProducts: ProductList = await getAllProducts();
 
   return {
     props: {

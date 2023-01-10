@@ -1,10 +1,12 @@
+import { Product, ProductList } from "../types/productType";
+
 export async function getAllProducts() {
   const response = await fetch(
     "https://e-commerce-nextjs-78991-default-rtdb.firebaseio.com/products.json"
   );
   const responseData = await response.json();
 
-  const loadedProducts = [];
+  const loadedProducts: ProductList = [];
 
   for (const key in responseData) {
     loadedProducts.push({

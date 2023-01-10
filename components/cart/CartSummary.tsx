@@ -1,17 +1,19 @@
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import useCartProducts from "./../../hooks/useCartProducts";
 import useOrderSummary from "../../hooks/useOrderSummary";
 import useUserInfo from "./../../hooks/useUserInfo";
 import { useRouter } from "next/router";
+import { cart, cartProduct } from "../../types/cartType";
+import { user } from "../../types/userInfo";
 
-const CartSummary = ({ isCheckout }: any) => {
+const CartSummary = ({ isCheckout }: { isCheckout: boolean }) => {
   const router = useRouter();
-  const { carts, cartDispatch } = useCartProducts();
-  const { orderSummary, orderSummaryDispatch } = useOrderSummary();
-  const { userInfo } = useUserInfo();
+  const { carts }: { carts: cart } = useCartProducts();
+  const { orderSummaryDispatch }: { orderSummaryDispatch: any } =
+    useOrderSummary();
+  const { userInfo }: { userInfo: user } = useUserInfo();
 
-  const [total, setTotal] = useState();
+  const [total, setTotal] = useState<number | null>(null);
 
   const cartHandler = () => {
     if (isCheckout && Object.keys(userInfo).length === 0) {
@@ -35,7 +37,7 @@ const CartSummary = ({ isCheckout }: any) => {
   };
 
   useEffect(() => {
-    const subTotal = carts?.reduce(
+    const subTotal: number = carts?.reduce(
       (acc: any, curr: any) => acc + curr.price * curr.qty,
       0
     );
@@ -56,7 +58,7 @@ const CartSummary = ({ isCheckout }: any) => {
             <p className="text-base text-gray-800">Quantity</p>
             <p className="text-base text-gray-800">Price</p>
           </div>
-          {carts?.map((cartProduct: any) => (
+          {carts?.map((cartProduct: cartProduct) => (
             <div
               key={cartProduct.id}
               className="flex items-center justify-between pt-8"
@@ -92,13 +94,6 @@ const CartSummary = ({ isCheckout }: any) => {
               Checkout
             </button>
           ) : (
-            // <Link
-            //   href={
-            //     isCheckout && Object.keys(userInfo).length !== 0
-            //       ? "/orderConfirmPage"
-            //       : "/checkoutPage"
-            //   }
-            // >
             <button
               onClick={() => cartHandler()}
               type="button"
@@ -106,7 +101,6 @@ const CartSummary = ({ isCheckout }: any) => {
             >
               {isCheckout ? "Order Summary" : "Checkout"}
             </button>
-            // </Link>
           )}
         </div>
       </div>

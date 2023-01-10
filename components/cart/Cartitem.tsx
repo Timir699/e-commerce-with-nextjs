@@ -1,9 +1,11 @@
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React from "react";
 import useCartProducts from "../../hooks/useCartProducts";
+import { cart, cartProduct } from "../../types/cartType";
 
-const CartItem = ({ product }: any) => {
-  const { cartDispatch, carts } = useCartProducts();
+const CartItem = ({ product }: { product: cartProduct }) => {
+  const { cartDispatch, carts }: { cartDispatch: any; carts: cart } =
+    useCartProducts();
 
   const setItem = () => {
     localStorage.setItem("cart", JSON.stringify(carts));

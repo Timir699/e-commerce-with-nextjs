@@ -5,12 +5,13 @@ import useOrderSummary from "../../hooks/useOrderSummary";
 import useCartProducts from "../../hooks/useCartProducts";
 
 const Maps = () => {
-  const { orderSummary, orderSummaryDispatch } = useOrderSummary();
+  const { orderSummaryDispatch }: { orderSummaryDispatch: any } =
+    useOrderSummary();
 
   const [anchor, setAnchor] = useState<any>([23.745, 90.4099]);
   const [lat, setLat] = useState<any>();
   const [lon, setLon] = useState<any>();
-  const [deliveryLocation, setDeliveryLocation] = useState<any>();
+  const [deliveryLocation, setDeliveryLocation] = useState<string | null>(null);
 
   const a = anchor[0];
   const b = anchor[1];
@@ -46,7 +47,10 @@ const Maps = () => {
 
   return (
     <div className="mt-10">
-      Change the shipping location by dragging the pin in map
+      <span className="text-xl font-bold mb-4">
+        Change the shipping location by dragging the pin in map
+      </span>
+
       <Map
         width={800}
         height={400}

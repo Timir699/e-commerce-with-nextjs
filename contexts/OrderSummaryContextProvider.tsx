@@ -1,7 +1,8 @@
 import { createContext, useEffect, useReducer } from "react";
 import { orderSummaryReducer } from "../reducers/orderSummaryReducer";
+import { orderSummary } from "../types/orderType";
 
-export const OrderSummaryContext = createContext<any>(null);
+export const OrderSummaryContext = createContext<any>({});
 
 const OrderSummaryContextProvider = ({ children }: any) => {
   const [orderSummary, orderSummaryDispatch] = useReducer(
@@ -21,7 +22,11 @@ const OrderSummaryContextProvider = ({ children }: any) => {
 
       orderSummaryDispatch({
         type: "INIT_STATE",
-        payload: orderData,
+        payload: {
+          orderedProducts: orderData,
+          paymentInfromation: "Not Applicable",
+          paymentMethod: "Cash",
+        },
       });
     }
   }, []);

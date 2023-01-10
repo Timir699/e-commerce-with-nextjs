@@ -1,9 +1,10 @@
 import { createContext, useEffect, useReducer, useState } from "react";
 import { cartReducer } from "../reducers/cartReducer";
+import { Props } from "../types/generic";
 
 export const CartContext = createContext<any>(null);
 
-const CartContextProvider = ({ children }: any) => {
+const CartContextProvider = ({ children }: Props) => {
   const [carts, cartDispatch] = useReducer(cartReducer, []);
 
   const values = {
