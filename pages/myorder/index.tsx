@@ -10,8 +10,6 @@ const MyOrderPage = ({ allOrders }: any) => {
     (order: any) => order.userInfo.userId === userInfo.userId
   );
 
-  console.log(userOrder);
-
   return (
     <div className="container mx-auto">
       <div className="bg-white p-8 rounded-md w-full">

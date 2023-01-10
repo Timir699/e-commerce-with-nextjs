@@ -6,8 +6,6 @@ const Profile = () => {
   const router = useRouter();
   const { isLoggedIn } = useContext(AuthContext);
 
-  console.log(isLoggedIn);
-
   // useEffect(() => {
   //   if (isLoggedIn) {
   //     router.push("/profile");

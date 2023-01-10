@@ -9,7 +9,6 @@ const Myorders = ({ orders }: any) => {
   const userOrder = orders?.filter(
     (order: any) => order.userInfo.userId === userInfo.userId
   );
-  console.log(userOrder);
 
   return (
     <>

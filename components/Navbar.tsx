@@ -12,7 +12,6 @@ const Navbar = () => {
   const { isLoggedIn, logout } = useContext(AuthContext);
   const { userInfo } = useUserInfo();
   let userID = Cookies.get("userId");
-  console.log(userID);
 
   const handleLogout = () => {
     logout();

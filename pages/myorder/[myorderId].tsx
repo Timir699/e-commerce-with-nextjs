@@ -6,12 +6,10 @@ import { useRouter } from "next/router";
 const MyorderDetails = () => {
   const { data, error, isLoading } = useQuery("orders", getOrders);
   const router = useRouter();
-  console.log(data);
 
   const orderDetails = data?.find(
     (orderDetails: any) => orderDetails.id === router.query.myorderId
   );
-  console.log(orderDetails);
 
   return (
     <div className="container mx-auto">

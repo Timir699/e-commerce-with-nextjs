@@ -38,8 +38,6 @@ const ProductDetails = ({ product }: any) => {
   const { carts, cartDispatch } = useCartProducts();
 
   const router = useRouter();
-  // console.log(router.query.id);
-
   const [review, setReview] = useState("");
 
   const handleSubmit = (event: any) => {

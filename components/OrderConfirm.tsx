@@ -7,11 +7,8 @@ import useCartProducts from "./../hooks/useCartProducts";
 const OrderConfirm = () => {
   const { orderSummary } = useOrderSummary();
   const { cartDispatch } = useCartProducts();
-  console.log(orderSummary);
 
   const orderConfirmHandler = async (orderSummary: any) => {
-    console.log(orderSummary);
-
     localStorage.removeItem("cart");
     localStorage.removeItem("orderSummary");
     cartDispatch({
@@ -29,7 +26,6 @@ const OrderConfirm = () => {
       }
     );
     const data = await response.json();
-    console.log(data);
   };
 
   return (

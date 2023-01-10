@@ -23,7 +23,6 @@ const Login = () => {
 
   const handleGoogleSignin = () => {
     signInWithPopup(auth, provider).then((data: any) => {
-      console.log(data.user);
       login(data.user?.accessToken);
 
       orderSummaryDispatch({
@@ -85,7 +84,6 @@ const Login = () => {
           login(data.idToken);
         }
         Cookies.set("loggedIn", "true");
-
         router.back();
       })
       .catch((err) => {

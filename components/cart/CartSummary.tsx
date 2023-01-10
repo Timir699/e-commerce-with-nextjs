@@ -14,9 +14,6 @@ const CartSummary = ({ isCheckout }: any) => {
   const [total, setTotal] = useState();
 
   const cartHandler = () => {
-    console.log(userInfo);
-    console.log(isCheckout);
-
     if (isCheckout && Object.keys(userInfo).length === 0) {
       router.push("/loginPage");
     }

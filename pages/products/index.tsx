@@ -7,7 +7,6 @@ import { getResult } from "../../services/getResult";
 const Products = ({ productData }: any) => {
   const [value, setValue] = useState("");
   const [result, setResult] = useState([]);
-  console.log(productData);
 
   const sorting = (e: any) => {
     const sortedRes = [...result];

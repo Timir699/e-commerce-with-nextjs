@@ -12,8 +12,6 @@ const Maps = () => {
   const [lon, setLon] = useState<any>();
   const [deliveryLocation, setDeliveryLocation] = useState<any>();
 
-  console.log(orderSummary.locationCoordinates);
-
   const a = anchor[0];
   const b = anchor[1];
 

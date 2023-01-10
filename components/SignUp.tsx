@@ -18,7 +18,6 @@ const SignUp = () => {
     signUpService(apiKey, enteredEmail, enteredPassword).then((res) => {
       setIsLoading(false);
       if (res.ok) {
-        console.log(res);
         alert("Signed up Successfully");
         router.push("loginPage");
       } else {
