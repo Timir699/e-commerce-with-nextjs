@@ -9,8 +9,6 @@ const OrderConfirm = () => {
   const [finalSummary, setFinalSummary] = useState<any>({});
 
   const orderConfirmHandler = async (orderSummary: any) => {
-    console.log(orderSummary);
-
     cartDispatch({
       type: "INIT_STATE",
       payload: [],
@@ -88,7 +86,6 @@ const OrderConfirm = () => {
                   <p>{product.qty * product.price}</p>
                 </div>
               ))}
-              {/* <b>Payment Information: </b> {orderSummary?.paymentInfromation} */}
             </div>
           </div>
         </div>

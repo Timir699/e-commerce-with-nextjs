@@ -10,3 +10,9 @@ export type orderSummary = {
   totalAmount: number | null;
   userInfo: user | null;
 };
+
+export interface order extends orderSummary {
+  id: string;
+}
+
+export type orders = order[];

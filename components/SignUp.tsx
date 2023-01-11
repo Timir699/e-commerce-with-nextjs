@@ -2,13 +2,13 @@ import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { apiKey } from "../apiKey/apiKey";
 import { signUpService } from "../services/auth/signUpService";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 
 const SignUp = () => {
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const submitHandler = (e: any) => {
     e.preventDefault();
@@ -42,7 +42,6 @@ const SignUp = () => {
                 name="email"
                 placeholder="Email"
               />
-
               <input
                 ref={passwordInputRef}
                 type="password"
@@ -50,7 +49,6 @@ const SignUp = () => {
                 name="password"
                 placeholder="Password"
               />
-
               {!isLoading ? (
                 <button
                   type="submit"

@@ -14,8 +14,9 @@ const Login = () => {
 
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
-  const { orderSummaryDispatch } = useOrderSummary();
-  const { userInfoDispatch } = useUserInfo();
+  const { orderSummaryDispatch }: { orderSummaryDispatch: any } =
+    useOrderSummary();
+  const { userInfoDispatch }: { userInfoDispatch: any } = useUserInfo();
 
   const { login } = useContext(AuthContext);
 
@@ -53,8 +54,6 @@ const Login = () => {
 
   const submitHandler = (e: any) => {
     e.preventDefault();
-
-    // const enteredName = nameInputRef.current.value;
     const enteredEmail = emailInputRef?.current?.value;
     const enteredPassword = passwordInputRef?.current?.value;
     setIsLoading(true);
@@ -111,7 +110,6 @@ const Login = () => {
                 name="email"
                 placeholder="Email"
               />
-
               <input
                 ref={passwordInputRef}
                 type="password"
@@ -130,8 +128,7 @@ const Login = () => {
                 "loading"
               )}
             </form>
-
-            <p>you can log in with</p>
+            <p className="text-xl">You can also log in with</p>
             {!isLoading ? (
               <button
                 onClick={handleGoogleSignin}

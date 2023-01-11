@@ -1,13 +1,10 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContextProvider";
 import useUserInfo from "../hooks/useUserInfo";
+import { user } from "../types/userInfo";
 
 const Profile = () => {
-  const router = useRouter();
-  const { userInfo } = useUserInfo();
-  console.log(userInfo);
+  const { userInfo }: { userInfo: user } = useUserInfo();
 
   return (
     <div className="container mx-auto text-xl">

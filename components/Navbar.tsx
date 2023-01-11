@@ -3,18 +3,19 @@ import { Router, useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";
 import useCartProducts from "../hooks/useCartProducts";
 import useUserInfo from "../hooks/useUserInfo";
+import { cart } from "../types/cartType";
+import { user } from "../types/userInfo";
 import { AuthContext } from "./../contexts/AuthContextProvider";
 import useOrderSummary from "./../hooks/useOrderSummary";
 
 const Navbar = () => {
   const router = useRouter();
-  const { carts } = useCartProducts();
+  const { carts }: { carts: cart } = useCartProducts();
   const { isLoggedIn, logout } = useContext(AuthContext);
-  const { userInfo } = useUserInfo();
+  const { userInfo }: { userInfo: user } = useUserInfo();
   const { cartDispatch }: { cartDispatch: any } = useCartProducts();
   const { orderSummaryDispatch }: { orderSummaryDispatch: any } =
     useOrderSummary();
-
   const { userInfoDispatch }: { userInfoDispatch: any } = useUserInfo();
 
   const handleLogout = () => {

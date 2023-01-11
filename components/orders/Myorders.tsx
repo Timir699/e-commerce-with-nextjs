@@ -1,13 +1,13 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 import useUserInfo from "../../hooks/useUserInfo";
+import { order, orders } from "../../types/orderType";
+import { user } from "../../types/userInfo";
 
-const Myorders = ({ orders }: any) => {
-  const { userInfo } = useUserInfo();
+const Myorders = ({ orders }: { orders: orders }) => {
+  const { userInfo }: { userInfo: user } = useUserInfo();
 
   const userOrder = orders?.filter(
-    (order: any) => order.userInfo.userId === userInfo.userId
+    (order: order) => order?.userInfo?.userId === userInfo.userId
   );
 
   return (
@@ -39,22 +39,20 @@ const Myorders = ({ orders }: any) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {userOrder?.map((singleOrder: any) => (
+                  {userOrder?.map((singleOrder: order) => (
                     <tr key={singleOrder.id} className="cursor-pointer">
-                      {/* <Link href={`/myorder`}> */}
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {singleOrder.id}
+                        {singleOrder?.id}
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {singleOrder.orderedProducts.length}
+                        {singleOrder?.orderedProducts?.length}
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {singleOrder.paymentMethod}
+                        {singleOrder?.paymentMethod}
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        ${singleOrder.totalAmount}
+                        ${singleOrder?.totalAmount}
                       </td>
-                      {/* </Link> */}
                     </tr>
                   ))}
                 </tbody>

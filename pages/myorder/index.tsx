@@ -1,13 +1,14 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import useUserInfo from "../../hooks/useUserInfo";
 import { getOrders } from "../../services/getOrders";
+import { order, orders } from "../../types/orderType";
+import { user } from "../../types/userInfo";
 
-const MyOrderPage = ({ allOrders }: any) => {
-  const { userInfo } = useUserInfo();
+const MyOrderPage = ({ allOrders }: { allOrders: orders }) => {
+  const { userInfo }: { userInfo: user } = useUserInfo();
 
   const userOrder = allOrders?.filter(
-    (order: any) => order.userInfo.userId === userInfo.userId
+    (order: any) => order?.userInfo?.userId === userInfo?.userId
   );
 
   return (
@@ -39,7 +40,7 @@ const MyOrderPage = ({ allOrders }: any) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {userOrder?.map((singleOrder: any) => (
+                  {userOrder?.map((singleOrder: order) => (
                     <tr key={singleOrder.id} className="cursor-pointer">
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <Link href={`/myorder/${singleOrder.id}`}>
@@ -48,17 +49,17 @@ const MyOrderPage = ({ allOrders }: any) => {
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <Link href={`/myorder/${singleOrder.id}`}>
-                          {singleOrder.orderedProducts.length}
+                          {singleOrder?.orderedProducts?.length}
                         </Link>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <Link href={`/myorder/${singleOrder.id}`}>
-                          {singleOrder.paymentMethod}
+                        <Link href={`/myorder/${singleOrder?.id}`}>
+                          {singleOrder?.paymentMethod}
                         </Link>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <Link href={`/myorder/${singleOrder.id}`}>
-                          ${singleOrder.totalAmount}
+                        <Link href={`/myorder/${singleOrder?.id}`}>
+                          ${singleOrder?.totalAmount}
                         </Link>
                       </td>
                     </tr>
