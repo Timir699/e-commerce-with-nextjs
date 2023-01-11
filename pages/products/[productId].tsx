@@ -108,7 +108,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
                 });
                 setItem();
               }}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"
             >
               Add to cart
             </button>
@@ -130,7 +130,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
           <br />
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+            className="bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded mt-2"
           >
             Leave a Review
           </button>

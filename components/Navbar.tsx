@@ -45,7 +45,7 @@ const Navbar = () => {
       <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-slate-200">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           <Link
-            href="/products"
+            href="/"
             className="self-center text-xl font-semibold whitespace-nowrap dark:text-black"
           >
             E-commerce
@@ -123,7 +123,7 @@ const Navbar = () => {
                 <li>
                   <button
                     onClick={handleLogout}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold  px-4 rounded"
+                    className="bg-gray-700 hover:bg-gray-900 text-white font-bold  px-4 rounded"
                   >
                     Logout
                   </button>

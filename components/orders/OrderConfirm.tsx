@@ -3,29 +3,18 @@ import useOrderSummary from "../../hooks/useOrderSummary";
 
 import Link from "next/link";
 import useCartProducts from "../../hooks/useCartProducts";
+import { postOrder } from "../../services/postOrder";
 
 const OrderConfirm = () => {
   const { cartDispatch } = useCartProducts();
   const [finalSummary, setFinalSummary] = useState<any>({});
 
-  const orderConfirmHandler = async (orderSummary: any) => {
+  const orderConfirmHandler = (orderSummary: any) => {
     cartDispatch({
       type: "INIT_STATE",
       payload: [],
     });
-    console.log(orderSummary);
-
-    const response = await fetch(
-      "https://e-commerce-nextjs-78991-default-rtdb.firebaseio.com/orders.json",
-      {
-        method: "POST",
-        body: JSON.stringify(orderSummary),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await response.json();
+    postOrder(orderSummary);
     localStorage.removeItem("cart");
     localStorage.removeItem("orderSummary");
     localStorage.removeItem("finalSummary");

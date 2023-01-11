@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Map, Draggable } from "pigeon-maps";
 import Image from "next/image";
 import useOrderSummary from "../../hooks/useOrderSummary";
-import useCartProducts from "../../hooks/useCartProducts";
 
 const Maps = () => {
   const { orderSummaryDispatch }: { orderSummaryDispatch: any } =

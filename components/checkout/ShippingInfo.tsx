@@ -39,7 +39,9 @@ const ShippingInfo = () => {
       <div className="mt-10 ">
         <p className="text-xl font-bold mb-4">Choose a payment method</p>
         <select
-          defaultValue={orderSummary.paymentMethod}
+          defaultValue={
+            orderSummary.paymentMethod ? orderSummary.paymentMethod : ""
+          }
           value={orderSummary.paymentMethod}
           onChange={handlePaymentMethod}
           className="py-2 px-1 border border-gray-200 mr-6 focus:outline-none"

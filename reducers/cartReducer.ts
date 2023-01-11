@@ -4,6 +4,7 @@ export const cartReducer = (state: any, action: any) => {
       state = action.payload;
       localStorage.setItem("cart", JSON.stringify(state));
       return state;
+
     case "ADD_TO_CART":
       const cartList = [...state, { ...action.payload, qty: 1 }];
       localStorage.setItem("cart", JSON.stringify(cartList));

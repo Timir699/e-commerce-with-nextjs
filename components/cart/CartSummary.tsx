@@ -17,11 +17,6 @@ const CartSummary = ({ isCheckout }: { isCheckout: boolean }) => {
 
   const [total, setTotal] = useState<number | null>(null);
 
-  console.log(orderSummary);
-  // console.log(carts);
-  // console.log(userInfo);
-  // console.log(total);
-
   const orderHandler = () => {
     if (isCheckout && Object.keys(userInfo).length === 0) {
       router.push("/loginPage");

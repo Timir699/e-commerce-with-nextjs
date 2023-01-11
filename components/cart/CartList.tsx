@@ -13,7 +13,6 @@ const CartList = () => {
       id="scroll"
     >
       <p className="text-3xl font-black text-gray-800 pt-2">Cart</p>
-
       {carts?.map((product: cartProduct) => {
         return <CartItem key={product.id} product={product} />;
       })}
