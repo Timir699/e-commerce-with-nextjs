@@ -22,11 +22,7 @@ const OrderSummaryContextProvider = ({ children }: any) => {
 
       orderSummaryDispatch({
         type: "INIT_STATE",
-        payload: {
-          orderedProducts: orderData,
-          paymentInfromation: "Not Applicable",
-          paymentMethod: "Cash",
-        },
+        payload: orderData,
       });
     }
   }, []);

@@ -9,7 +9,7 @@ export const getOrders = async () => {
     loadedOrders.push({
       id: key.toString(),
       deliveryLocation: data[key]?.deliveryLocation,
-      locationCoordinates: data[key]?.locationCoordinates,
+      // locationCoordinates: data[key]?.locationCoordinates,
       orderedProducts: data[key]?.orderedProducts,
       paymentInfromation: data[key]?.paymentInfromation,
       paymentMethod: data[key]?.paymentMethod,
@@ -31,7 +31,7 @@ export const getOrdersWithReactQuery = async () => {
     loadedOrders.push({
       id: key.toString(),
       deliveryLocation: data[key]?.deliveryLocation,
-      locationCoordinates: data[key]?.locationCoordinates,
+      // locationCoordinates: data[key]?.locationCoordinates,
       orderedProducts: data[key]?.orderedProducts,
       paymentInfromation: data[key]?.paymentInfromation,
       paymentMethod: data[key]?.paymentMethod,

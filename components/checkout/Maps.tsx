@@ -32,10 +32,10 @@ const Maps = () => {
   }, []);
   useEffect(() => {
     locationFromMap();
-    orderSummaryDispatch({
-      type: "SET_LOCATION_COORDINATES",
-      payload: anchor,
-    });
+    // orderSummaryDispatch({
+    //   type: "SET_LOCATION_COORDINATES",
+    //   payload: anchor,
+    // });
   }, [anchor]);
 
   useEffect(() => {

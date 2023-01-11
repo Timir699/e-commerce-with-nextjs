@@ -9,13 +9,20 @@ import { user } from "../../types/userInfo";
 const CartSummary = ({ isCheckout }: { isCheckout: boolean }) => {
   const router = useRouter();
   const { carts }: { carts: cart } = useCartProducts();
-  const { orderSummaryDispatch }: { orderSummaryDispatch: any } =
-    useOrderSummary();
+  const {
+    orderSummary,
+    orderSummaryDispatch,
+  }: { orderSummary: any; orderSummaryDispatch: any } = useOrderSummary();
   const { userInfo }: { userInfo: user } = useUserInfo();
 
   const [total, setTotal] = useState<number | null>(null);
 
-  const cartHandler = () => {
+  console.log(orderSummary);
+  // console.log(carts);
+  // console.log(userInfo);
+  // console.log(total);
+
+  const orderHandler = () => {
     if (isCheckout && Object.keys(userInfo).length === 0) {
       router.push("/loginPage");
     }
@@ -31,9 +38,22 @@ const CartSummary = ({ isCheckout }: { isCheckout: boolean }) => {
         type: "SET_SUBTOTAL",
         payload: total,
       });
+      orderSummaryDispatch({
+        type: "SET_FINAL",
+        payload: {
+          orderSummary: orderSummary,
+          userInfo: userInfo,
+          totalAmount: total,
+          carts: carts,
+        },
+      });
+
       router.push("/orderConfirmPage");
     }
-    router.push("checkoutPage");
+  };
+
+  const gotoCheckout = () => {
+    router.push("/checkoutPage");
   };
 
   useEffect(() => {
@@ -95,7 +115,7 @@ const CartSummary = ({ isCheckout }: { isCheckout: boolean }) => {
             </button>
           ) : (
             <button
-              onClick={() => cartHandler()}
+              onClick={() => (isCheckout ? orderHandler() : gotoCheckout())}
               type="button"
               className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
             >

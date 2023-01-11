@@ -34,7 +34,6 @@ const AuthContextProvider = ({ children }: Props) => {
     localStorage.removeItem("cart");
     Cookies.remove("loggedIn");
     Cookies.remove("userID");
-    window.location.reload();
   };
 
   const contextValue: authContexValue = {

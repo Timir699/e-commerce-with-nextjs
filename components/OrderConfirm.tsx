@@ -1,20 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useOrderSummary from "../hooks/useOrderSummary";
 
 import Link from "next/link";
 import useCartProducts from "./../hooks/useCartProducts";
 
 const OrderConfirm = () => {
-  const { orderSummary } = useOrderSummary();
   const { cartDispatch } = useCartProducts();
+  const [finalSummary, setFinalSummary] = useState<any>();
 
   const orderConfirmHandler = async (orderSummary: any) => {
-    localStorage.removeItem("cart");
-    localStorage.removeItem("orderSummary");
+    console.log(orderSummary);
+
     cartDispatch({
       type: "INIT_STATE",
       payload: [],
     });
+    console.log(orderSummary);
+
     const response = await fetch(
       "https://e-commerce-nextjs-78991-default-rtdb.firebaseio.com/orders.json",
       {
@@ -26,7 +28,15 @@ const OrderConfirm = () => {
       }
     );
     const data = await response.json();
+    localStorage.removeItem("cart");
+    localStorage.removeItem("orderSummary");
+    localStorage.removeItem("finalSummary");
   };
+
+  useEffect(() => {
+    let res = JSON.parse(localStorage.getItem("finalSummary") || "{}");
+    setFinalSummary(res);
+  }, []);
 
   return (
     <div className="container mx-auto">
@@ -40,22 +50,22 @@ const OrderConfirm = () => {
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
               <b>Email:</b>
-              {orderSummary?.userEmail || orderSummary?.userInfo?.userEmail}
+              {finalSummary?.userEmail || finalSummary?.userInfo?.userEmail}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
-              <b>Shipping Address:</b> {orderSummary.deliveryLocation}
+              <b>Shipping Address:</b> {finalSummary?.deliveryLocation}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
-              <b>Payment Method:</b> {orderSummary?.paymentMethod}
+              <b>Payment Method:</b> {finalSummary?.paymentMethod}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
-              <b>Payment Information: </b> {orderSummary?.paymentInfromation}
+              <b>Payment Information: </b> {finalSummary?.paymentInfromation}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
@@ -67,7 +77,7 @@ const OrderConfirm = () => {
                 <p>quantity</p>
                 <p>total price</p>
               </div>
-              {orderSummary?.orderedProducts?.map((product: any) => (
+              {finalSummary?.orderedProducts?.map((product: any) => (
                 <div
                   key={product.id}
                   className="flex justify-between w-full mt-5"
@@ -83,11 +93,11 @@ const OrderConfirm = () => {
           </div>
         </div>
         <p className="text-2xl font-bold mt-5">
-          Subtotal : ${orderSummary.totalAmount}
+          Subtotal : ${finalSummary?.totalAmount}
         </p>
         <Link href="/myorder">
           <button
-            onClick={() => orderConfirmHandler(orderSummary)}
+            onClick={() => orderConfirmHandler(finalSummary)}
             type="button"
             className="p-10 mt-5 text-base leading-none w-full py-5 bg-gray-800 border-gray-500 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
           >

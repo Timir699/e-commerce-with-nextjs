@@ -1,20 +1,17 @@
 export const orderSummaryReducer = (state: any, action: any) => {
   switch (action.type) {
     case "INIT_STATE":
-      state = action.payload;
+      state = {
+        orderedProducts: action.payload.orderedProducts,
+        paymentInfromation: action.payload.paymentInfromation,
+        paymentMethod: action.payload.paymentMethod,
+      };
       localStorage.setItem("orderSummary", JSON.stringify(state));
       return state;
     case "SET_DELIVERY_LOCATION":
       state = {
         ...state,
         deliveryLocation: action.payload,
-      };
-      localStorage.setItem("orderSummary", JSON.stringify(state));
-      return state;
-    case "SET_LOCATION_COORDINATES":
-      state = {
-        ...state,
-        locationCoordinates: action.payload,
       };
       localStorage.setItem("orderSummary", JSON.stringify(state));
       return state;
@@ -46,17 +43,22 @@ export const orderSummaryReducer = (state: any, action: any) => {
       };
 
       localStorage.setItem("orderSummary", JSON.stringify(state));
-      return state;
-    // case "SET_USERINFO":
-    //   state = {
-    //     ...state,
-    //     userId: action.payload.userId,
-    //     userName: action.payload.userName,
-    //     userEmail: action.payload.userEmail,
-    //   };
+    case "SET_FINAL":
+      // state = action.payload;
+      const test = {
+        ...action.payload.orderSummary,
+        userInfo: action.payload.userInfo,
+        totalAmount: action.payload.totalAmount,
+        orderedProducts: action.payload.carts,
+      };
+      console.log(test);
 
-    //   localStorage.setItem("orderSummary", JSON.stringify(state));
-    //   return state;
+      // console.log(action.payload.orderSummary);
+      // console.log(action.payload.userInfo);
+
+      localStorage.setItem("finalSummary", JSON.stringify(test));
+      return state;
+
     default:
       return state;
   }

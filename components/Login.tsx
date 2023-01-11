@@ -3,7 +3,7 @@ import { apiKey } from "../apiKey/apiKey";
 import { AuthContext } from "./../contexts/AuthContextProvider";
 import { useRouter } from "next/router";
 import { auth, provider } from "../firebase/firebase.config";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { loginService } from "../services/auth/loginService";
 import useOrderSummary from "./../hooks/useOrderSummary";
 import useUserInfo from "../hooks/useUserInfo";
@@ -19,29 +19,36 @@ const Login = () => {
 
   const { login } = useContext(AuthContext);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleGoogleSignin = () => {
-    signInWithPopup(auth, provider).then((data: any) => {
-      login(data.user?.accessToken);
+    setIsLoading(true);
+    signInWithPopup(auth, provider)
+      .then((data: any) => {
+        login(data.user?.accessToken);
 
-      orderSummaryDispatch({
-        type: "SET_USERINFO",
-        payload: {
-          userId: data.user.uid,
-          userEmail: data.user.email,
-        },
+        orderSummaryDispatch({
+          type: "SET_USERINFO",
+          payload: {
+            userId: data.user.uid,
+            userEmail: data.user.email,
+          },
+        });
+        userInfoDispatch({
+          type: "SET_USERINFO",
+          payload: {
+            userId: data.user.uid,
+            userEmail: data.user.email,
+          },
+        });
+        Cookies.set("loggedIn", "true");
+        setIsLoading(false);
+        router.back();
+      })
+      .catch((error: any) => {
+        alert("auth tab closed by user");
+        setIsLoading(false);
       });
-      userInfoDispatch({
-        type: "SET_USERINFO",
-        payload: {
-          userId: data.user.uid,
-          userEmail: data.user.email,
-        },
-      });
-      Cookies.set("loggedIn", "true");
-      router.back();
-    });
   };
 
   const submitHandler = (e: any) => {
@@ -87,7 +94,7 @@ const Login = () => {
         router.back();
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
       });
   };
   return (
@@ -125,12 +132,16 @@ const Login = () => {
             </form>
 
             <p>you can log in with</p>
-            <button
-              onClick={handleGoogleSignin}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Log in with Google
-            </button>
+            {!isLoading ? (
+              <button
+                onClick={handleGoogleSignin}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Log in with Google
+              </button>
+            ) : (
+              "loading"
+            )}
           </div>
         </div>
       </div>
