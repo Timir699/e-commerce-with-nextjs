@@ -8,7 +8,7 @@ const MyOrderPage = ({ allOrders }: { allOrders: orders }) => {
   const { userInfo }: { userInfo: user } = useUserInfo();
 
   const userOrder = allOrders?.filter(
-    (order: any) => order?.userInfo?.userId === userInfo?.userId
+    (order: order) => order?.userInfo?.userId === userInfo?.userId
   );
 
   return (

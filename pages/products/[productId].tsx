@@ -6,6 +6,7 @@ import Image from "next/image";
 import useCartProducts from "../../hooks/useCartProducts";
 import { Product } from "../../types/productType";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { cart } from "../../types/cartType";
 
 export const getStaticProps: GetStaticProps = async (context: any) => {
   const { params } = context;
@@ -36,9 +37,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const ProductDetails = ({ product }: { product: Product }) => {
-  const { carts, cartDispatch } = useCartProducts();
-
-  const router = useRouter();
+  const { carts, cartDispatch }: { carts: cart; cartDispatch: any } =
+    useCartProducts();
   const [review, setReview] = useState<string>("");
 
   const handleSubmit = (event: any) => {

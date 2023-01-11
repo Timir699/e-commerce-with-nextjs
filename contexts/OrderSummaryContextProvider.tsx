@@ -1,6 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
 import { orderSummaryReducer } from "../reducers/orderSummaryReducer";
-import { orderSummary } from "../types/orderType";
 
 export const OrderSummaryContext = createContext<any>({});
 
@@ -9,12 +8,10 @@ const OrderSummaryContextProvider = ({ children }: any) => {
     orderSummaryReducer,
     {}
   );
-
   const values = {
     orderSummary,
     orderSummaryDispatch,
   };
-
   useEffect(() => {
     let orderData;
     if (localStorage.getItem("orderSummary")) {

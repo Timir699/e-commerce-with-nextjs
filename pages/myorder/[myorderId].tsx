@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { getOrders } from "../../services/getOrders";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
+import { order } from "../../types/orderType";
 
 const MyorderDetails = () => {
   const { data, error, isLoading } = useQuery("orders", getOrders);
   const router = useRouter();
 
   const orderDetails = data?.find(
-    (orderDetails: any) => orderDetails.id === router.query.myorderId
+    (orderDetails: order) => orderDetails.id === router.query.myorderId
   );
 
   return (

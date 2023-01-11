@@ -11,7 +11,7 @@ const Products = ({ productData }: { productData: ProductList }) => {
   const [result, setResult] = useState<ProductList>([]);
 
   const sorting = (e: any) => {
-    const sortedRes = [...result];
+    const sortedRes: ProductList = [...result];
     if (e.target.value === "lowest") {
       const lowToHigh = sortedRes.sort(
         (a: Product, b: Product) => a.price - b.price
