@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import useCartProducts from "../hooks/useCartProducts";
 import useUserInfo from "../hooks/useUserInfo";
@@ -17,7 +17,6 @@ const Navbar = () => {
   const { orderSummaryDispatch }: { orderSummaryDispatch: any } =
     useOrderSummary();
   const { userInfoDispatch }: { userInfoDispatch: any } = useUserInfo();
-  const [isNavOpen, setIsNavOpen] = useState(false);
 
   const handleLogout = () => {
     logout();

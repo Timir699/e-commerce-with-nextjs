@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useOrderSummary from "../../hooks/useOrderSummary";
+import { useRouter } from "next/router";
 
 import Link from "next/link";
 import useCartProducts from "../../hooks/useCartProducts";
@@ -8,6 +8,7 @@ import { postOrder } from "../../services/postOrder";
 const OrderConfirm = () => {
   const { cartDispatch } = useCartProducts();
   const [finalSummary, setFinalSummary] = useState<any>({});
+  const router = useRouter();
 
   const orderConfirmHandler = (orderSummary: any) => {
     cartDispatch({
@@ -18,6 +19,7 @@ const OrderConfirm = () => {
     localStorage.removeItem("cart");
     localStorage.removeItem("orderSummary");
     localStorage.removeItem("finalSummary");
+    router.push("/myorder");
   };
 
   useEffect(() => {
@@ -81,25 +83,23 @@ const OrderConfirm = () => {
         <p className="text-2xl font-bold mt-5">
           Subtotal : ${finalSummary?.totalAmount}
         </p>
-        <Link href="/myorder">
-          {Object?.keys(finalSummary).length > 5 ? (
-            <button
-              onClick={() => orderConfirmHandler(finalSummary)}
-              type="button"
-              className="p-10 mt-5 text-base leading-none w-full py-5 bg-gray-800 border-gray-500 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
-            >
-              Confirm Order
-            </button>
-          ) : (
-            <button
-              disabled
-              type="button"
-              className="p-10 mt-5 text-base leading-none w-full py-5 bg-gray-400 border-gray-200 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
-            >
-              Confirm Order
-            </button>
-          )}
-        </Link>
+        {Object?.keys(finalSummary).length > 5 ? (
+          <button
+            onClick={() => orderConfirmHandler(finalSummary)}
+            type="button"
+            className="p-10 w-1/4 mt-5 text-base leading-none sm:w-full py-5 bg-gray-800 border-gray-500 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
+          >
+            Confirm Order
+          </button>
+        ) : (
+          <button
+            disabled
+            type="button"
+            className="p-10 w-1/4 mt-5 text-base leading-none py-5 sm:w-full bg-gray-400 border-gray-200 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
+          >
+            Confirm Order
+          </button>
+        )}
       </div>
     </div>
   );

@@ -70,7 +70,7 @@ const CartItem = ({ product }: { product: cartProduct }) => {
                     payload: product,
                   });
                 }}
-                className="text-sm font-bold ml-10 underline text-red-00 cursor-pointer"
+                className="text-sm font-bold ml-10 underline text-red-00 cursor-pointer text-red-500 hover:text-red-700"
               >
                 Remove
               </p>
