@@ -50,12 +50,7 @@ const Maps = () => {
         Change the shipping location by dragging the pin in map
       </span>
 
-      <Map
-        width={800}
-        height={400}
-        defaultCenter={[23.745, 90.4099]}
-        defaultZoom={15}
-      >
+      <Map height={400} defaultCenter={[23.745, 90.4099]} defaultZoom={15}>
         <Draggable offset={[60, 87]} anchor={anchor} onDragEnd={setAnchor}>
           <Image
             src="/placeholder.png"
@@ -65,6 +60,7 @@ const Maps = () => {
           />
         </Draggable>
       </Map>
+
       <h2 className="text-xl">
         <b>Delivery Location: </b>
         {deliveryLocation}

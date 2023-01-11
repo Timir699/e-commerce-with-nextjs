@@ -44,7 +44,7 @@ export default function App({ productData }: { productData: ProductList }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container mx-auto">
-        <div className="flex justify-between container mx-auto">
+        <div className="flex justify-between sm:flex-wrap sm:content-between container mx-auto">
           <input
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setValue(e.target.value)

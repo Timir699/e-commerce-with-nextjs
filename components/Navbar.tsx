@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Router, useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useCartProducts from "../hooks/useCartProducts";
 import useUserInfo from "../hooks/useUserInfo";
 import { cart } from "../types/cartType";
@@ -17,6 +17,7 @@ const Navbar = () => {
   const { orderSummaryDispatch }: { orderSummaryDispatch: any } =
     useOrderSummary();
   const { userInfoDispatch }: { userInfoDispatch: any } = useUserInfo();
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -52,7 +53,7 @@ const Navbar = () => {
           </Link>
 
           <div className="w-full md:block md:w-auto" id="navbar-default">
-            <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-slate-200 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-slate-200 bg-slate-200 md:bg-slate-200 dark:border-gray-700">
+            <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-slate-200 md:flex-row sm:items-center md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-slate-200 bg-slate-200 md:bg-slate-200 dark:border-gray-400">
               <li>
                 <Link
                   href="/products"
