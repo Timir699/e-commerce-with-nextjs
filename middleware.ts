@@ -15,6 +15,9 @@ export default function middleware(req: any) {
   if (!verify && url.includes("/myorder")) {
     return NextResponse.redirect("http://localhost:3000/");
   }
+  if (!verify && url.includes("/orderConfirmPage")) {
+    return NextResponse.redirect("http://localhost:3000/");
+  }
 
   if (verify && url === "http://localhost:3000/loginPage") {
     return NextResponse.redirect("http://localhost:3000/myorder");

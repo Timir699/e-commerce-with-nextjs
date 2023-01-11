@@ -1,5 +1,5 @@
 import React from "react";
-import OrderConfirm from "../components/OrderConfirm";
+import OrderConfirm from "../components/orders/OrderConfirm";
 
 const orderConfirmPage = () => {
   return (

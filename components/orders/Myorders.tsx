@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import useUserInfo from "./../hooks/useUserInfo";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const Myorders = ({ orders }: any) => {
   const { userInfo } = useUserInfo();

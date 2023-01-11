@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import useOrderSummary from "../hooks/useOrderSummary";
+import useOrderSummary from "../../hooks/useOrderSummary";
 
 import Link from "next/link";
-import useCartProducts from "./../hooks/useCartProducts";
+import useCartProducts from "../../hooks/useCartProducts";
 
 const OrderConfirm = () => {
   const { cartDispatch } = useCartProducts();
-  const [finalSummary, setFinalSummary] = useState<any>();
+  const [finalSummary, setFinalSummary] = useState<any>({});
 
   const orderConfirmHandler = async (orderSummary: any) => {
     console.log(orderSummary);
@@ -96,13 +96,23 @@ const OrderConfirm = () => {
           Subtotal : ${finalSummary?.totalAmount}
         </p>
         <Link href="/myorder">
-          <button
-            onClick={() => orderConfirmHandler(finalSummary)}
-            type="button"
-            className="p-10 mt-5 text-base leading-none w-full py-5 bg-gray-800 border-gray-500 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
-          >
-            Confirm Order
-          </button>
+          {Object?.keys(finalSummary).length > 5 ? (
+            <button
+              onClick={() => orderConfirmHandler(finalSummary)}
+              type="button"
+              className="p-10 mt-5 text-base leading-none w-full py-5 bg-gray-800 border-gray-500 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
+            >
+              Confirm Order
+            </button>
+          ) : (
+            <button
+              disabled
+              type="button"
+              className="p-10 mt-5 text-base leading-none w-full py-5 bg-gray-400 border-gray-200 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
+            >
+              Confirm Order
+            </button>
+          )}
         </Link>
       </div>
     </div>
