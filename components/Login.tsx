@@ -46,7 +46,8 @@ const Login = () => {
         router.back();
       })
       .catch((error: any) => {
-        alert("auth tab closed by user");
+        console.log(error.message);
+
         setIsLoading(false);
       });
   };
