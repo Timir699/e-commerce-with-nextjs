@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { getOrders } from "../../services/getOrders";
-import { useQuery } from "react-query";
 import { useRouter } from "next/router";
-import { order } from "../../types/orderType";
+import { orders } from "../../types/orderType";
 
-const MyorderDetails = () => {
-  const { data, error, isLoading } = useQuery("orders", getOrders);
+const MyorderDetails = ({ allOrders }: { allOrders: orders }) => {
   const router = useRouter();
 
-  const orderDetails = data?.find(
-    (orderDetails: order) => orderDetails.id === router.query.myorderId
+  const orderDetails = allOrders?.find(
+    (orderDetails: any) => orderDetails.id === router.query.myorderId
   );
 
   return (
@@ -62,7 +60,6 @@ const MyorderDetails = () => {
                   <p>{product.qty * product.price}</p>
                 </div>
               ))}
-              {/* <b>Payment Information: </b> {orderSummary?.paymentInfromation} */}
             </div>
           </div>
         </div>
@@ -72,6 +69,16 @@ const MyorderDetails = () => {
       </div>
     </div>
   );
+};
+
+export const getServerSideProps = async () => {
+  const loadedOrders = await getOrders();
+
+  return {
+    props: {
+      allOrders: loadedOrders,
+    },
+  };
 };
 
 export default MyorderDetails;
