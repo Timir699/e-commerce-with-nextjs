@@ -47,7 +47,6 @@ const Login = () => {
       })
       .catch((error: any) => {
         console.log(error.message);
-
         setIsLoading(false);
       });
   };
