@@ -47,8 +47,8 @@ const Login = () => {
         router.back();
       })
       .catch((error: any) => {
-        console.log(error.message);
         setIsLoading(false);
+        alert(error.message);
       });
   };
 
@@ -85,7 +85,6 @@ const Login = () => {
             userEmail: data.email,
           },
         });
-
         if (data.idToken) {
           login(data.idToken);
         }
@@ -93,7 +92,7 @@ const Login = () => {
         router.back();
       })
       .catch((err) => {
-        console.log(err.message);
+        alert(err?.message);
       });
   };
   return (
