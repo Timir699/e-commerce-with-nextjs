@@ -1,48 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { getOrders } from "../../services/getOrders";
 import { useRouter } from "next/router";
 import { orders } from "../../types/orderType";
 
 const MyorderDetails = ({ allOrders }: { allOrders: orders }) => {
   const router = useRouter();
-  const [finaslSummary, setFinalSummay] = useState<any>(allOrders);
 
   const orderDetails = allOrders?.find(
     (orderDetails: any) => orderDetails.id === router.query.myorderId
   );
-
-  useEffect(() => {
-    setFinalSummay(orderDetails);
-  }, [orderDetails]);
 
   return (
     <div className="container mx-auto">
       <div className="flex flex-col justify-start items-start bg-gray-50 w-full p-6 md:p-14">
         <div>
           <h1 className="text-2xl font-semibold leading-6 text-gray-800">
-            Details of order Id {finaslSummary?.id}
+            Details of order Id {orderDetails?.id}
           </h1>
         </div>
         <div className="flex mt-7 flex-col items-end w-full space-y-6">
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
               <b>Email:</b>
-              {finaslSummary?.userInfo?.userEmail}
+              {orderDetails?.userInfo?.userEmail}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
-              <b>Shipping Address:</b> {finaslSummary?.deliveryLocation}
+              <b>Shipping Address:</b> {orderDetails?.deliveryLocation}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
-              <b>Payment Method:</b> {finaslSummary?.paymentMethod}
+              <b>Payment Method:</b> {orderDetails?.paymentMethod}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
             <p className="text-lg leading-4 text-gray-600">
-              <b>Payment Information: </b> {finaslSummary?.paymentInfromation}
+              <b>Payment Information: </b> {orderDetails?.paymentInfromation}
             </p>
           </div>
           <div className="flex justify-between w-full items-center">
@@ -54,7 +49,7 @@ const MyorderDetails = ({ allOrders }: { allOrders: orders }) => {
                 <p>quantity</p>
                 <p>total price</p>
               </div>
-              {finaslSummary?.orderedProducts?.map((product: any) => (
+              {orderDetails?.orderedProducts?.map((product: any) => (
                 <div
                   key={product.id}
                   className="flex justify-between w-full mt-5"
@@ -69,7 +64,7 @@ const MyorderDetails = ({ allOrders }: { allOrders: orders }) => {
           </div>
         </div>
         <p className="text-2xl font-bold mt-5">
-          Total : ${finaslSummary?.totalAmount}
+          Total : ${orderDetails?.totalAmount}
         </p>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import useUserInfo from "../../hooks/useUserInfo";
 import { getOrders } from "../../services/getOrders";
@@ -6,11 +7,14 @@ import { user } from "../../types/userInfo";
 
 const MyOrderPage = ({ allOrders }: { allOrders: orders }) => {
   const { userInfo }: { userInfo: user } = useUserInfo();
+  const [finaslSummary, setFinalSummay] = useState<orders>(allOrders);
 
   const userOrder = allOrders?.filter(
     (order: order) => order?.userInfo?.userId === userInfo?.userId
   );
-
+  useEffect(() => {
+    setFinalSummay(userOrder);
+  }, [userOrder]);
   return (
     <div className="container mx-auto">
       <div className="bg-white p-8 rounded-md w-full">
@@ -40,7 +44,7 @@ const MyOrderPage = ({ allOrders }: { allOrders: orders }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {userOrder?.map((singleOrder: order) => (
+                  {finaslSummary?.map((singleOrder: order) => (
                     <tr key={singleOrder.id} className="cursor-pointer">
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <Link href={`/myorder/${singleOrder.id}`}>
